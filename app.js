@@ -15,7 +15,7 @@ app.use('/', renderer);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
+    var err = new Error('Nibba Dis file aint exist');
     err.status = 404;
     next(err);
 });
@@ -36,6 +36,6 @@ app.use(function(err, req, res, next) {
     html+= '  </body>';
     html+= '</html>';
     res.send(html);
-}); 
+});
 
 module.exports = app;

@@ -1,11 +1,12 @@
 {
-  "name": "plasmoxy.openode.io",
+  "name": "sub-sample",
   "version": "1.0.0",
-  "description": "Node page of Plasmoxy.",
+  "description": "",
   "main": "server.js",
-  "repository": "https://github.com/Plasmoxy/plasmoxy.openode.io",
   "dependencies": {
-    "express": "^4.16.2"
+    "body-parser": "^1.16.0",
+    "compression": "^1.6.2",
+    "express": "^4.14.1"
   },
   "devDependencies": {},
   "scripts": {
@@ -13,5 +14,5 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": ""
+  "license": "ISC"
 }

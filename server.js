@@ -5,6 +5,7 @@ var http = require('http');
 var forceSsl = require('express-force-ssl');
 
 var app = express();
+app.use(forceSsl);
 
 var options = {
   key: fs.readFileSync('ssl/private.key'),

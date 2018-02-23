@@ -5,9 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "express": "^4.16.2",
-    "express-force-ssl": "^0.3.2",
-    "openode": "^1.4.0",
-    "sync": "^0.2.5"
+    "express-force-ssl": "^0.3.2"
   },
   "devDependencies": {},
   "scripts": {

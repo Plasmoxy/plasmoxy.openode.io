@@ -4,8 +4,7 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.16.2",
-    "express-force-ssl": "^0.3.2"
+    "express": "^4.16.2"
   },
   "devDependencies": {},
   "scripts": {

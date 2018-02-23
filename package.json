@@ -1,10 +1,13 @@
 {
-  "name": "sub-sample",
+  "name": "sebu",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.14.1"
+    "express": "^4.16.2",
+    "express-force-ssl": "^0.3.2",
+    "openode": "^1.4.0",
+    "sync": "^0.2.5"
   },
   "devDependencies": {},
   "scripts": {

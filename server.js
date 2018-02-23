@@ -1,13 +1,16 @@
-const express = require('express');
+var express = require('express');
+var fs = require('fx');
+var https = require('https');
+var http = require('http');
+var forceSsl = require('express-force-ssl');
 
-const options = {
-  
+var app = express();
+
+var options = {
+  key: fs.readFileSync('ssl/private.key'),
+  cert: fs.readFileSync('ssl/primary.crt'),
+  ca: fs.readFileSync('ssl/ca_bundle.crt')
 };
 
-const app = express();
-
-app.get('/', (req, res) => {
-  res.send('Hello World!'));
-}
-
-app.listen(80, () => console.log('[pmxy express] Listening on port 80'));
+https.createServer(options, app).listen(443);
+http.createServer(app).listen(80);

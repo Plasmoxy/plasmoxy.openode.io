@@ -47,11 +47,15 @@ io.on('connection', function(socket){
 
 // --- ROUTING ---
 
-app.get('/', function (req, res, next) {
+app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 })
 
-app.get('/log', function (req, res, next) {
+app.get('/chat', function (req,res)) {
+  res.sendFile(__dirname + '/chat.html');
+})
+
+app.get('/log', function (req, res) {
   res.send(logString);
 })
 

@@ -1,8 +1,9 @@
 var express = require('express');
-//var httpsRedirect = require('express-https-redirect');
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
+
+var logString = '';
 
 var ssl_options = {
   key: fs.readFileSync('ssl/private.key'),
@@ -10,34 +11,54 @@ var ssl_options = {
   ca: fs.readFileSync('ssl/ca_bundle.crt')
 };
 
-var app = express();
+function log(text) {
+  logString += '[' + new Date().toLocaleString() + '] ' + text + '<br>';
+}
 
+
+// --- INITIALIZE ---
+
+var app = express();
 var secureServer = https.createServer(ssl_options, app);
 var server = http.createServer(app);
 
-app.get('*', function (req, res, next) { // redirect http to https
+var io = require('socket.io')(secureServer);
+
+// --- EXPRESS INIT ---
+
+// redirect to https
+app.get('*', function (req, res, next) {
   !req.secure ? res.redirect('https://plasmoxy.openode.io' + req.url) : next();
 })
 
-// ---
+app.use('/assets', express.static('assets'));
 
+// --- CUSTOM  ---
 var count = 0;
 
+// --- SOCKETS ---
+
+io.on('connection', function(client){
+  log('' + client.handshake.address + 'connected');
+  console.log('' + client.handshake.address + 'con');
+  client.on('event', function(data){
+    log('data');
+  });
+  client.on('disconnect', function(){});
+});
+
+// --- ROUTING ---
+
 app.get('/', function (req, res, next) {
-  var a = Number(req.query.a);
-  if (isNaN(a)) a=0;
-  var b = Number(req.query.b);
-  if (isNaN(b)) b=0;
-  res.send('' + a + ' + ' + b + ' = ' + (a+b));
+  res.sendFile(__dirname + '/index.html');
 })
 
-app.get('/count', function (req, res, next) {
-  count++;
-  res.send('count = ' + count);
+app.get('/log', function (req, res, next) {
+  res.send(logString);
 })
 
 
-// ---
+// --- START ---
 
 secureServer.listen(443)
 server.listen(80)

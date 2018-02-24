@@ -19,14 +19,14 @@ function log(text) {
 // --- INITIALIZE ---
 
 var app = express();
-var secureServer = https.createServer(ssl_options, app);
-var server = http.createServer(app);
+var server = https.createServer(ssl_options, app);
+var insecureServer = http.createServer(app);
 
-var io = require('socket.io')(secureServer);
+var io = require('socket.io')(server);
 
 // --- EXPRESS INIT ---
 
-// redirect to https
+// redirect to https, TODO: PROTECT THIS AGAINST MITM
 app.get('*', function (req, res, next) {
   !req.secure ? res.redirect('https://plasmoxy.openode.io' + req.url) : next();
 })
@@ -38,14 +38,12 @@ var count = 0;
 
 // --- SOCKETS ---
 
-io.on('connection', function(client){
-  log('' + client.handshake.address + 'connected');
-  console.log('' + client.handshake.address + 'con');
-  client.on('event', function(data){
-    log('data');
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){ // chat event
+    io.emit('chat message', msg);
   });
-  client.on('disconnect', function(){});
 });
+
 
 // --- ROUTING ---
 
@@ -60,7 +58,7 @@ app.get('/log', function (req, res, next) {
 
 // --- START ---
 
-secureServer.listen(443)
-server.listen(80)
+server.listen(443)
+insecureServer.listen(80)
 
 console.log('[server.js] Listening for http and https')

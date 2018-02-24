@@ -15,8 +15,8 @@ var app = express();
 var secureServer = https.createServer(ssl_options, app);
 var server = http.createServer(app);
 
-app.get('*', function (req, res, next) {
-  !req.secure ? res.redirect('https://plasmoxy.openode.io' + req.baseUrl) : next();
+app.get('*', function (req, res, next) { // redirect http to https
+  !req.secure ? res.redirect('https://plasmoxy.openode.io' + req.url) : next();
 })
 
 // ---
@@ -24,10 +24,14 @@ app.get('*', function (req, res, next) {
 var count = 0;
 
 app.get('/', function (req, res, next) {
-  res.send('xd');
+  var a = Number(req.query.a);
+  if (isNaN(a)) a=0;
+  var b = Number(req.query.b);
+  if (isNaN(b)) b=0;
+  res.send('' + a + ' + ' + b + ' = ' + (a+b));
 })
 
-app.get('/count', function (req, res, next)) {
+app.get('/count', function (req, res, next) {
   count++;
   res.send('count = ' + count);
 })
@@ -37,3 +41,5 @@ app.get('/count', function (req, res, next)) {
 
 secureServer.listen(443)
 server.listen(80)
+
+console.log('[server.js] Listening for http and https')

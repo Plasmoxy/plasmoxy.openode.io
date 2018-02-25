@@ -39,8 +39,7 @@ app.use('/assets', express.static('assets'));
 // --- SOCKETS ---
 
 io.sockets.on('connection', function(client){
-  var clientIp = client.conn.transport.socket._socket.remoteAddress;
-  client.on('chat message', function(msg){ // chat event
+  client.on('chat message', function(msg){ // chat relay
     io.emit('chat message', msg);
   });
 });

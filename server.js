@@ -22,7 +22,7 @@ var app = express();
 var server = https.createServer(ssl_options, app);
 var insecureServer = http.createServer(app);
 
-var io = require('socket.io').listen(insecureServer);
+var io = require('socket.io').listen(server);
 
 // --- EXPRESS INIT ---
 
@@ -39,8 +39,8 @@ app.use('/assets', express.static('assets'));
 // --- SOCKETS ---
 
 io.sockets.on('connection', function(client){
-  client.on('relay', function(msg){ // relay
-    io.emit('relay', msg);
+  client.on('chat message', function(msg){ // relay
+    io.emit('chat message', msg);
   });
 });
 

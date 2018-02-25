@@ -24,14 +24,14 @@
     <script>
       $(function () {
         var starttime, endtime, ping;
-        var socket = io.connect('http://plasmoxy.openode.io', { transports: ['websocket']});
+        var socket = io.connect('https://plasmoxy.openode.io', { transports: ['websocket']});
         $('form').submit(function(){
           starttime = performance.now();
-          socket.emit('relay', $('#m').val());
+          socket.emit('chat message', $('#m').val());
           $('#m').val('');
           return false;
         });
-        socket.on('relay', function(msg){
+        socket.on('chat message', function(msg){
           endtime = performance.now();
           $('#messages').append($('<li>').text('[ ping = ' + Math.round(endtime-starttime) + ' ms ] ' + msg));
           window.scrollTo(0, document.body.scrollHeight);

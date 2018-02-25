@@ -39,8 +39,8 @@ app.use('/assets', express.static('assets'));
 // --- SOCKETS ---
 
 io.sockets.on('connection', function(client){
-  client.on('chat message', function(msg){ // chat relay
-    io.emit('chat message', msg);
+  client.on('relay', function(msg){ // relay
+    io.emit('relay', msg);
   });
 });
 

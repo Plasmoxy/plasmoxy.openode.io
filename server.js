@@ -40,7 +40,7 @@ app.use('/assets', express.static('assets'));
 
 io.sockets.on('connection', function(client){
   var clientIp = client.request.connection.remoteAddress;
-  client.on('chat message', function(msg){ // chat event
+  client.on('chat message', function(msg){ // chat evente
     io.emit('chat message', '{ ' + clientIp + ' } ' + msg);
   });
 });

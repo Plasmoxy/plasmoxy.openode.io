@@ -38,9 +38,10 @@ app.use('/assets', express.static('assets'));
 
 // --- SOCKETS ---
 
-io.sockets.on('connection', function(socket){
-  socket.on('chat message', function(msg){ // chat event
-    io.emit('chat message', msg);
+io.sockets.on('connection', function(client){
+  var clientIp = client.request.connection.remoteAddress;
+  client.on('chat message', function(msg){ // chat event
+    io.emit('chat message', '{ ' + clientIp + ' } ' + msg);
   });
 });
 
@@ -53,6 +54,10 @@ app.get('/', function (req, res) {
 
 app.get('/chat', function (req,res) {
   res.sendFile(__dirname + '/chat.html');
+})
+
+app.get('/localchat', function (req,res) {
+  res.sendFile(__dirname + '/localchat.html');
 })
 
 app.get('/log', function (req, res) {

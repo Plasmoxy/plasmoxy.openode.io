@@ -22,7 +22,7 @@ var app = express();
 var server = https.createServer(ssl_options, app);
 var insecureServer = http.createServer(app);
 
-var io = require('socket.io').listen(server);
+var io = require('socket.io').listen(insecureServer);
 
 // --- EXPRESS INIT ---
 
